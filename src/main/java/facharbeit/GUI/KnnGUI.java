@@ -28,7 +28,7 @@ public class KnnGUI extends JFrame {
 
 	// Laden des Standart-Netzes
 	{
-	    InputStream stream = getClass().getClassLoader().getResourceAsStream("KNNs/NeuralNetwork.knn");
+	    InputStream stream = getClass().getClassLoader().getResourceAsStream("KNNs/NeuralNetwork.nnet");
 	    networkFile = null;
 	    neuralNetwork = NeuralNetwork.load(stream);
 
@@ -55,11 +55,11 @@ public class KnnGUI extends JFrame {
 
 	// Hinzufügen der einzelnen Fenster
 	{
-	    tabbedPane.addTab("Erkennung", new RecognitionPanel());
+	    tabbedPane.addTab("Classification", new RecognitionPanel());
 	    tabbedPane.addTab("Tests", new TestPanel());
-	    // tabbedPane.addTab("Display", new DisplayPanel());
-	    // tabbedPane.addTab("Schreiben", new WritePanel());
-	    tabbedPane.addTab("Einstellungen", new SettingPanel());
+	    tabbedPane.addTab("Display", new DisplayPanel());
+	    tabbedPane.addTab("Writing", new WritePanel());
+	    tabbedPane.addTab("Settings", new SettingPanel());
 	}
 	contentPanel.add(tabbedPane);
     }

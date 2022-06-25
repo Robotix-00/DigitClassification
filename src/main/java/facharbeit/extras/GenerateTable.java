@@ -37,9 +37,9 @@ public class GenerateTable {
 	}
 	scanner.close();
 
-	for (File file : new File("KNNs/Iteration2").listFiles(new FilenameFilter() {
+	for (File file : new File("NNet").listFiles(new FilenameFilter() {
 	    public boolean accept(File dir, String name) {
-		return name.startsWith("net-") && name.endsWith(".knn");
+		return name.startsWith("net-") && name.endsWith(".nnet");
 	    }
 	})) {
 	    NeuralNetwork net = NeuralNetwork.load(file);
@@ -58,7 +58,7 @@ public class GenerateTable {
 		if (lable == labels[i])
 		    yeyCounter++;
 	    }
-	    System.out.println(file.getName() + ": " + yeyCounter + " von " + trainElements + " ("
+	    System.out.println(file.getName() + ": " + yeyCounter + " out of " + trainElements + " ("
 		    + ((double) yeyCounter / trainElements) * 100 + "%)");
 
 	}

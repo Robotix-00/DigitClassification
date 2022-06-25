@@ -2,39 +2,40 @@ package facharbeit.neuralNetwork;
 
 import Jama.Matrix;
 
-/*
- * Beinhaltet Methoden zur Verarbeitung und Erstellung von Matritzen
- */
 public class MatrixManager {
-    // Gibt den kleinsten Wert eines Arrays zurück
+    // returns the minimum value of a 2d array
     public static double getMin(double[][] values) {
-	double min = 100;
-
+	double min = values[0][1];
+	
+	int j = 1;
 	for (int i = 0; i < values.length; i++) {
-	    for (int j = 0; j < values[0].length; j++) {
+	    for (; j < values[0].length; j++) {
 		if (min > values[i][j])
 		    min = values[i][j];
 	    }
+	    j = 0;
 	}
 
 	return min;
     }
 
-    // Gibt den größten Wert eines Arrays zurück
+    // returns the maximum value of a 2d array
     public static double getMax(double[][] values) {
-	double max = -100;
-
+	double max = values[0][1];
+	
+	int j = 1;
 	for (int i = 0; i < values.length; i++) {
-	    for (int j = 0; j < values[0].length; j++) {
+	    for (; j < values[0].length; j++) {
 		if (max < values[i][j])
 		    max = values[i][j];
 	    }
+	    j = 0;
 	}
 
 	return max;
     }
 
-    // Limitiert die übergebene Matrix auf den Bereich 0.01 bis 0.99
+    // limits all values of the array to be 0<x<1
     public static Matrix limit(Matrix matrix) {
 	double[][] out = matrix.getArray();
 
@@ -53,7 +54,7 @@ public class MatrixManager {
 	return matrix;
     }
 
-    // Erzeugt eine Matrix mit den Maßen x*y, wobei jeder Wert value entspricht
+    // creates a matrix of size x*y where each field is set to value
     public static Matrix createMatrix(double value, int x, int y) {
 	Matrix out = new Matrix(x, y);
 
@@ -65,7 +66,7 @@ public class MatrixManager {
 	return out;
     }
 
-    // Erstellt aus einem 1d-Array eine 2d-Matrix mit den Maßen x*y
+    // maps a 1d array to a 2d array of size x*y
     public static Matrix createMatrix(double[] values, int x, int y) {
 	Matrix tmp = new Matrix(x, y);
 

@@ -24,7 +24,6 @@ import facharbeit.GUI.Grid;
 /*
  * Schreibt die eingetragenen Pixel als eingestellte Zahl in die ausgewählte Datei 
  */
-@Deprecated
 public class WritePanel extends JPanel {
     private static final long serialVersionUID = 1L;
     private Grid panel;

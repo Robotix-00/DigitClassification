@@ -3,11 +3,10 @@ package facharbeit.GUI.panels;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.io.InputStreamReader;
 import java.util.NoSuchElementException;
-import java.util.stream.Stream;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -18,7 +17,6 @@ import facharbeit.GUI.Grid;
  * Verwendet zum Ansehen der Beispiele in einer Datei
  * Unnötig, deshalb entfernt
  */
-@Deprecated
 public class DisplayPanel extends JPanel {
     private Grid panel;
     private int exampleIndex = 0;
@@ -54,15 +52,19 @@ public class DisplayPanel extends JPanel {
 	    }
 	});
 
-	loadExample(0);
+	//loadExample(0);
     }
 
     public void loadExample(int lineIndex) {
 	String line = null;
-	try (Stream<String> lines = Files.lines(Paths.get("dataset/trainset.csv"))) {
-	    line = lines.skip(lineIndex).findFirst().get();
+	BufferedReader lines = new BufferedReader(
+		new InputStreamReader(getClass().getResourceAsStream("dataset/trainset.csv")));
+
+	try {
+	    lines.skip(lineIndex);
+	    line = lines.readLine();
 	} catch (IOException e) {
-	    System.out.println(e);
+	    e.printStackTrace();
 	}
 
 	String[] values = line.split(",");

@@ -10,7 +10,7 @@ import java.awt.event.MouseMotionListener;
 import javax.swing.JPanel;
 
 /*
- * Panel zum Zeichnen einer Zahl in ein 28x28-Pixel Feld
+ * Panel to draw/display a 28x28-pixel image
  */
 public class Grid extends JPanel implements MouseListener, MouseMotionListener {
     private int[][] grid;
@@ -37,7 +37,7 @@ public class Grid extends JPanel implements MouseListener, MouseMotionListener {
 	    g.drawOval(mousePos.x - 30, mousePos.y - 30, 60, 60);
     }
 
-    // Zeichnet die einzelnen Pixel
+    // draws a single pixel
     private void drawGrid(Graphics g) {
 	for (int row = 0; row < 28; row++) {
 	    for (int col = 0; col < 28; col++) {
@@ -49,7 +49,7 @@ public class Grid extends JPanel implements MouseListener, MouseMotionListener {
 	    }
 	}
 
-	// Zeichnen der Trennlinien
+	// draws a divider
 	g.setColor(Color.black);
 	for (int row = 0; row < 29; row++) {
 	    for (int col = 0; col < 29; col++) {
@@ -59,18 +59,18 @@ public class Grid extends JPanel implements MouseListener, MouseMotionListener {
 	}
     }
 
-    // Gibt eine Graustufe zurück
+    // returns a crayscale color from a single number (0-255)
     private Color getGrayscale(int colNum) {
 	int greyScale = 255 - colNum;
 	return new Color(greyScale, greyScale, greyScale);
     }
 
-    // Leert das Grid
+    // what do you think?
     private void clearGrid() {
 	grid = new int[28][28];
     }
 
-    // Leert das Grid und erneuert die Anzeige
+    // clears the grid and rerenders the GUI
     public void clear() {
 	clearGrid();
 	this.repaint();
@@ -93,17 +93,16 @@ public class Grid extends JPanel implements MouseListener, MouseMotionListener {
     }
 
     /*
-     * Färbt auf dem Grid einen dreistufigen Kreis ein.
+     * draws a circle.
      */
     private void drawCircle(int x, int y, int value) {
 	if (x < 0 || x >= 28 || y < 0 || y >= 28)
 	    return;
 
-	// relative Positionen der einzufärbenden Felder
+	// relative positions of all colored pixels
 	int[][][] locs = { { { 0, 0 } }, { { 1, 0 }, { -1, 0 }, { 0, 1 }, { 0, -1 } },
 		{ { 2, 0 }, { -2, 0 }, { 0, 2 }, { 0, -2 }, { 1, 1 }, { -1, -1 }, { -1, 1 }, { 1, -1 } } };
 
-	// Felder der Farbstufe 1
 	for (int[] pos : locs[0]) {
 	    int dx = x + pos[0], dy = y + pos[1];
 	    if (dx < 28 && dx >= 0 && dy < 28 && dy >= 0) {
@@ -111,7 +110,6 @@ public class Grid extends JPanel implements MouseListener, MouseMotionListener {
 	    }
 	}
 
-	// Felder der Farbstufe 2
 	for (int[] pos : locs[1]) {
 	    int dx = x + pos[0], dy = y + pos[1];
 	    if (dx < 28 && dx >= 0 && dy < 28 && dy >= 0) {
@@ -120,7 +118,6 @@ public class Grid extends JPanel implements MouseListener, MouseMotionListener {
 	    }
 	}
 
-	// Felder der Fabstufe 3
 	for (int[] pos : locs[2]) {
 	    int dx = x + pos[0], dy = y + pos[1];
 	    if (dx < 28 && dx >= 0 && dy < 28 && dy >= 0) {
@@ -142,9 +139,6 @@ public class Grid extends JPanel implements MouseListener, MouseMotionListener {
 	this.repaint();
     }
 
-    /*
-     * Getter
-     */
     public int[][] getGrid() {
 	return this.grid;
     }
@@ -165,9 +159,6 @@ public class Grid extends JPanel implements MouseListener, MouseMotionListener {
 	return readOnly;
     }
 
-    /*
-     * Unused Methods
-     */
     public void mouseClicked(MouseEvent e) {
     }
 

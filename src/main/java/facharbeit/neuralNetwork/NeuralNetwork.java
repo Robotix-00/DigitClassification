@@ -9,25 +9,21 @@ import java.util.Scanner;
 
 import Jama.Matrix;
 
-/*
- * Beinhaltet alle Methoden zur Erstellung, Trainierung, Speicherung eines Neuronalen Netzes
- */
 public class NeuralNetwork {
     private int inodes, hnodes, onodes;
     private Matrix weights_ih, weights_ho;
 
-    // Erstellt ein neues KNN mit entsprechender Knotenanzahl
     public NeuralNetwork(int inodes, int hnodes, int onodes) {
 	this.inodes = inodes;
 	this.hnodes = hnodes;
 	this.onodes = onodes;
 
-	// Generiert zufällige Gewichte zwischen -0.5 und 0.5
+	// generates random weights between -0.5 and 0.5
 	weights_ih = Matrix.random(hnodes, inodes).minus(new Matrix(hnodes, inodes, 0.5));
 	weights_ho = Matrix.random(onodes, hnodes).minus(new Matrix(onodes, hnodes, 0.5));
     }
 
-    // Gibt eine Vorhersage des Netzes für die übergebenen Werte aus
+    // returns a prediction
     public double[] query(double[] in) {
 	Matrix inputs, hiddenValues, outputValues;
 
@@ -38,7 +34,7 @@ public class NeuralNetwork {
 	return outputValues.getArray()[0];
     }
 
-    // Trainiert das Netz mit dem übergebenen Datensatz
+    // trains the net with the passed data
     public void train(double[] in, double[] target, double learnrate) {
 	Matrix inputs, targets, hiddenValues, outputValues, outputError, hiddenError, weightAdaptation;
 
@@ -48,7 +44,7 @@ public class NeuralNetwork {
 	hiddenValues = sigmoid(weights_ih.times(inputs));
 	outputValues = sigmoid(weights_ho.times(hiddenValues));
 
-	// Berechnen der Fehler
+	// calculating the error
 	outputError = targets.minus(outputValues);
 	hiddenError = weights_ho.transpose().times(outputError);
 
@@ -59,18 +55,19 @@ public class NeuralNetwork {
 	weights_ih.plusEquals(weightAdaptation.times(learnrate));
     }
 
-    // Lässt das Netz alle übergebenen Datensätze mehrfach lernen
+    // trains the net for multiple epochs
     public void fit(double[][] in, double[][] target, int epochs, double learnrate) {
+	System.out.println("starting training...");
 	for (int i = 0; i < epochs; i++) {
 	    for (int j = 0; j < in.length; j++) {
 		train(in[j], target[j], learnrate);
 	    }
-	    System.out.println("Epoche " + (i + 1) + "/" + epochs);
+	    System.out.println("epoch " + (i + 1) + "/" + epochs);
 	}
-	System.out.println("Training beendet");
+	System.out.println("training finished");
     }
 
-    // Läd ein Netz aus der angegebenen Datei
+    // loads a neural network from the specified file
     public static NeuralNetwork load(File file) {
 	try {
 	    return load(new Scanner(file));
@@ -110,7 +107,7 @@ public class NeuralNetwork {
 	return net;
     }
 
-    // Speichert das Netz in der angegebenen Datei
+    // saves the neural network to the specified file
     public void save(File file) {
 	try {
 	    file.createNewFile();
@@ -137,7 +134,7 @@ public class NeuralNetwork {
 	}
     }
 
-    // Wendet die Sigmoid-Funktion auf alle Elemente der Matrix an
+    // applies the sigmoid function to all values of a matrix
     private static Matrix sigmoid(Matrix matrix) {
 	double[][] matrixArray = matrix.getArray();
 	for (int i = 0; i < matrixArray.length; i++) {
@@ -149,8 +146,7 @@ public class NeuralNetwork {
 	return matrix;
     }
 
-    // Wendet die Umkehroperation der Sigmoid-Funktion auf alle Elemente der Matrix
-    // an
+    // applies the reverse sigmoid function to all valies of a matrix
     private static Matrix desigmoid(Matrix matrix) {
 	double[][] matrixArray = matrix.getArray();
 	for (int i = 0; i < matrixArray.length; i++) {
@@ -162,7 +158,7 @@ public class NeuralNetwork {
 	return matrix;
     }
 
-    // Gibt die Größe des KNNs zurück
+    // returns the size of all three layers of the neural network
     public int[] getSize() {
 	return new int[] { inodes, hnodes, onodes };
     }
