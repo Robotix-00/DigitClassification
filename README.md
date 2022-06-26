@@ -1,13 +1,11 @@
-# NumberRecognition
+# digit classification
 
-## Ziel
-Das Ziel war es, ein Künstliches Neuronales Netz zu erstellen, welches in der Lage sein sollte, aus einem Bild eine arabische Ziffer zu erkennen. 
+The goal was to create a nerual network from scratch that could classify a digit from an image. It is based on a paper I wrote in in 10th grade. I do not intend to maintain this project further.
 
-## Code
-Der Java-Code, welcher unter /src/de/hoffmann/bruno/facharbeit zu finden ist, beinhaltet Klassen zur Umsetzung des GUI und zur Durchführung der mathematischen Berechnungen. Beispielklassen zum Trainieren von diversen Netzen finden sich in dem Unterorder /extras. Zur Entwicklung verwendete ich das JDK-14.0.1.
+## Development
+This project uses the build-tool Maven to manage the one dependency. I tested it on Java 17 although it should work on all versions > 1.7.
+By default, the program includes a default network that worked quite well for me.
 
-## Trainingssatz
-Unter /dataset sind der Trainings- und Testdatensatz hinterlegt, insgesammt mit ungefähr 1450 Beispielen. Diese wurden von mir selbst erstellt und für das Training meiner Netze verwendet.
-
-## Netze
-Alle trainierten Netze sind in dem Ordner /KNNs zu finden. Der Unterordner /Iteration2 bietet eine Datei namens 'log.txt', welche die Treffsicherheit und Trainingszeit für alle Netze des Ordners beinhaltet.
+## Dataset
+The program uses the csv format for its datasets, the first value represents the label of the following 784 grayscale pixels. In order to train the current nerual network I used the [MNIST-Dataset](http://yann.lecun.com/exdb/mnist/) as well as a self created one which turned out to work better.
+This might be caused by the fact, that the handwritten digits look quite diffrent from the mouse-drawn ones that this program creates.
