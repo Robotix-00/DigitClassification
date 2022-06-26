@@ -21,11 +21,9 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import facharbeit.GUI.Grid;
 
-/*
- * Schreibt die eingetragenen Pixel als eingestellte Zahl in die ausgewählte Datei 
- */
 public class WritePanel extends JPanel {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = -942692246944071484L;
+    
     private Grid panel;
     private BufferedWriter writer;
 
@@ -57,19 +55,7 @@ public class WritePanel extends JPanel {
 
 	// File-Label
 	{
-	    selectedFile = new File("dataset/trainset.csv");
-	    try {
-		writer = new BufferedWriter(new FileWriter(selectedFile, true));
-	    } catch (IOException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	    }
-	    JLabel label;
-	    if (selectedFile.exists())
-		label = new JLabel(selectedFile.getPath());
-	    else
-		label = new JLabel();
-
+	    JLabel label = new JLabel();
 	    label.setBounds(25, 300, 200, 20);
 
 	    selectedFileLabel = label;
@@ -78,7 +64,7 @@ public class WritePanel extends JPanel {
 
 	// Select-Button
 	{
-	    JButton btn = new JButton("Datei auswählen");
+	    JButton btn = new JButton("Select file");
 	    btn.setBounds(10, 262, 130, 25);
 	    this.add(btn);
 	    btn.addActionListener(new ActionListener() {
@@ -93,7 +79,7 @@ public class WritePanel extends JPanel {
 		    if (selectedFile == null)
 			return;
 
-		    selectedFileLabel.setText("Datei: " + selectedFile.getName());
+		    selectedFileLabel.setText("File: " + selectedFile.getName());
 
 		    try {
 			writer = new BufferedWriter(new FileWriter(selectedFile, true));
@@ -125,11 +111,19 @@ public class WritePanel extends JPanel {
 	    reloadLabel();
 	    this.add(label);
 	}
+	
+	// Next-Value Label
+	{
+	    JLabel label = new JLabel("press ENTER to save the number");
+	    label.setBounds(300, 10, 200, 20);
+	    
+	    this.add(label);
+	}
     }
 
     public void saveNumber() {
 	if (selectedFile == null || !selectedFile.exists()) {
-	    JOptionPane.showMessageDialog(null, "Du musst eine Datei auswählen", null, 2);
+	    JOptionPane.showMessageDialog(null, "Please select a file to write to", null, 2);
 	    return;
 	}
 

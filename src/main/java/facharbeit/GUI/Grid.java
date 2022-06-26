@@ -13,6 +13,8 @@ import javax.swing.JPanel;
  * Panel to draw/display a 28x28-pixel image
  */
 public class Grid extends JPanel implements MouseListener, MouseMotionListener {
+    private static final long serialVersionUID = 405057209900357486L;
+    
     private int[][] grid;
     private boolean readOnly;
     private Point mousePos = new Point(0, 0);

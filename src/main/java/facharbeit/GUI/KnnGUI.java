@@ -2,22 +2,22 @@ package facharbeit.GUI;
 
 import java.io.File;
 import java.io.InputStream;
-import java.net.URISyntaxException;
-import java.net.URL;
 
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.border.EmptyBorder;
 
-import facharbeit.GUI.panels.*;
+import facharbeit.GUI.panels.DisplayPanel;
+import facharbeit.GUI.panels.RecognitionPanel;
+import facharbeit.GUI.panels.SettingPanel;
+import facharbeit.GUI.panels.TestPanel;
+import facharbeit.GUI.panels.WritePanel;
 import facharbeit.neuralNetwork.NeuralNetwork;
 
-/*
- * HauptFenster des GUIs - Verwaltung des KNNs und der Unterfenster
- */
 public class KnnGUI extends JFrame {
+    private static final long serialVersionUID = -2491554068914103949L;
+    
     public static NeuralNetwork neuralNetwork;
     public static File networkFile;
 
@@ -39,7 +39,7 @@ public class KnnGUI extends JFrame {
 	this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 	this.getContentPane().setLayout(null);
 	this.setResizable(false);
-	this.setTitle("Nummernerkennung");
+	this.setTitle("digit recognition");
 
 	//
 	contentPanel = new JPanel();

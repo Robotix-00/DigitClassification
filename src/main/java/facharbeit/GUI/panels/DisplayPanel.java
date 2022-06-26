@@ -3,21 +3,20 @@ package facharbeit.GUI.panels;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Scanner;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import facharbeit.GUI.Grid;
 
-/*
- * Verwendet zum Ansehen der Beispiele in einer Datei
- * Unnötig, deshalb entfernt
- */
 public class DisplayPanel extends JPanel {
+    private static final long serialVersionUID = 7936452373116638725L;
+
     private Grid panel;
     private int exampleIndex = 0;
 
@@ -37,7 +36,6 @@ public class DisplayPanel extends JPanel {
 		try {
 		    loadExample(exampleIndex += 1);
 		} catch (NoSuchElementException e) {
-		    // Letzten Datensatz erreicht
 		    exampleIndex--;
 		}
 	    }
@@ -47,35 +45,31 @@ public class DisplayPanel extends JPanel {
 	add(btnReg);
 	btnReg.addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent arg0) {
-		if (exampleIndex > 1)
+		if (exampleIndex > 0)
 		    loadExample(exampleIndex -= 1);
 	    }
 	});
 
-	//loadExample(0);
+	loadExample(0);
     }
 
+    private Scanner scanner = new Scanner(
+	    new InputStreamReader(getClass().getResourceAsStream("/dataset/testset.csv")));
+    private List<int[][]> grids = new LinkedList<>();
+
     public void loadExample(int lineIndex) {
-	String line = null;
-	BufferedReader lines = new BufferedReader(
-		new InputStreamReader(getClass().getResourceAsStream("dataset/trainset.csv")));
+	if (lineIndex >= grids.size()) {
+	    String[] values = scanner.nextLine().split(",");
+	    int[][] grid = new int[28][28];
 
-	try {
-	    lines.skip(lineIndex);
-	    line = lines.readLine();
-	} catch (IOException e) {
-	    e.printStackTrace();
-	}
-
-	String[] values = line.split(",");
-	int[][] grid = new int[28][28];
-
-	for (int y = 0; y < 28; y++) {
-	    for (int x = 0; x < 28; x++) {
-		grid[x][y] = Integer.parseInt(values[1 + x + (y * 28)]);
+	    for (int y = 0; y < 28; y++) {
+		for (int x = 0; x < 28; x++) {
+		    grid[x][y] = Integer.parseInt(values[1 + x + (y * 28)]);
+		}
 	    }
+	    grids.add(grid);
 	}
 
-	panel.draw(grid);
+	panel.draw(grids.get(lineIndex));
     }
 }

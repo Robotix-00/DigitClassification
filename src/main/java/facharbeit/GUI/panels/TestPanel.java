@@ -16,11 +16,9 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import facharbeit.GUI.KnnGUI;
 
-/*
- * Liest alle Zahlen aus einer Datei aus und sagt deren Wert voraus.
- * Gibt am Schluss die Treffischerheit aus
- */
 public class TestPanel extends JPanel {
+    private static final long serialVersionUID = 2766442209479077609L;
+    
     private JProgressBar successBar;
     private JLabel successLabel;
 
@@ -32,7 +30,7 @@ public class TestPanel extends JPanel {
 	// Beschreibung
 	{
 	    JLabel label = new JLabel(
-		    "Wählen Sie eine Trainingsdatei aus und erhalten Sie die Treffsicherheit des KNNs.");
+		    "Select a trainset to test the accuracy of the loaded nnet");
 	    label.setBounds(25, 10, 500, 20);
 
 	    successLabel = label;
@@ -51,7 +49,7 @@ public class TestPanel extends JPanel {
 
 	// Start Button
 	{
-	    JButton btn = new JButton("Start");
+	    JButton btn = new JButton("start");
 	    btn.setBounds(20, 125, 100, 25);
 	    this.add(btn);
 	    btn.addActionListener(new ActionListener() {
@@ -85,7 +83,7 @@ public class TestPanel extends JPanel {
 	
 	if (!KnnGUI.hasNeuralNetwork()) {
 	    JOptionPane.showMessageDialog(null,
-		    "Das Standard-Netz konnte nicht geladen werden, bitte wählen Sie ein anders aus", null, 2);
+		    "The default nnet failed to load, please select another one", null, 2);
 	    return;
 	}
 
@@ -122,7 +120,7 @@ public class TestPanel extends JPanel {
 			successBar.setString(successCounter + " von " + counter);
 		    }
 		    scanner.close();
-		    successLabel.setText("Treffsicherheit: " + ((double) successCounter / counter * 100) + "%");
+		    successLabel.setText("Accuracy: " + ((double) successCounter / counter * 100) + "%");
 		} catch (FileNotFoundException | NumberFormatException e1) {
 		    e1.printStackTrace();
 		}

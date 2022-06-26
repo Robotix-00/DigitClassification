@@ -13,10 +13,9 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import facharbeit.GUI.KnnGUI;
 import facharbeit.neuralNetwork.NeuralNetwork;
 
-/*
- * Zur Einstellung von allen Variablen (KNN-Pfad)
- */
 public class SettingPanel extends JPanel {
+    private static final long serialVersionUID = -9068568466794132027L;
+    
     private Label networkLabel;
 
     public SettingPanel() {
@@ -26,25 +25,23 @@ public class SettingPanel extends JPanel {
 	{
 	    // Label
 	    {
-		Label label;
 		if (KnnGUI.networkFile != null && KnnGUI.networkFile.exists())
-		    label = new Label("Netzwerk: " + KnnGUI.networkFile.getName());
+		    networkLabel = new Label("selected network: " + KnnGUI.networkFile.getName());
 		else
-		    label = new Label("Netzwerk: standard");
-		label.setBounds(150, 20, 500, 20);
+		    networkLabel = new Label("selected network: standard");
+		networkLabel.setBounds(150, 20, 500, 20);
 
-		networkLabel = label;
 		this.add(networkLabel);
 	    }
 	    // File-Select
 	    {
-		JButton btn = new JButton("KNN auswählen");
+		JButton btn = new JButton("select nnet");
 		btn.setBounds(10, 15, 130, 25);
 		this.add(btn);
 		btn.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
 			JFileChooser chooser = new JFileChooser();
-			chooser.setFileFilter(new FileNameExtensionFilter("KNN", "knn"));
+			chooser.setFileFilter(new FileNameExtensionFilter("NNET", "nnet"));
 			chooser.setCurrentDirectory(new File("."));
 			
 			chooser.showOpenDialog(null);
@@ -55,7 +52,7 @@ public class SettingPanel extends JPanel {
 			
 			NeuralNetwork net = NeuralNetwork.load(KnnGUI.networkFile);
 			if (net != null) {
-			    networkLabel.setText("Netzwerk: " + KnnGUI.networkFile.getName());
+			    networkLabel.setText("network: " + KnnGUI.networkFile.getName());
 			    KnnGUI.setNeuralNetwork(net);
 			}
 		    }

@@ -16,10 +16,9 @@ import javax.swing.KeyStroke;
 import facharbeit.GUI.Grid;
 import facharbeit.GUI.KnnGUI;
 
-/*
- * Panel zur Eingabe einer 28x28 Pixel-Matrix und deren Auswertung zu einer Zahl
- */
 public class RecognitionPanel extends JPanel {
+    private static final long serialVersionUID = -7166733650943568423L;
+    
     private Grid panel;
     private JProgressBar[] bars;
     private JLabel[] labels;
@@ -29,6 +28,8 @@ public class RecognitionPanel extends JPanel {
 
 	this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("ENTER"), "rec");
 	this.getActionMap().put("rec", new AbstractAction() {
+	    private static final long serialVersionUID = 7335839252711354615L;
+
 	    @Override
 	    public void actionPerformed(ActionEvent e) {
 		predict();
@@ -43,9 +44,9 @@ public class RecognitionPanel extends JPanel {
 	    add(panel);
 	}
 
-	// Erkennungs-Button
+	// Classification-Button
 	{
-	    JButton btnReg = new JButton("Erkennen");
+	    JButton btnReg = new JButton("Classify");
 	    btnReg.setBounds(20, 262, 100, 25);
 	    this.add(btnReg);
 	    btnReg.addActionListener(new ActionListener() {
@@ -97,24 +98,22 @@ public class RecognitionPanel extends JPanel {
 	}
     }
 
-    // Sagt die Zahl vorher
+    // classifies the 28x28 pixel matrix as a number
     private void predict() {
 	int[] intGrid = panel.get1dGrid();
 	double[] grid = new double[intGrid.length];
 	for (int i = 0; i < intGrid.length; i++)
 	    grid[i] = (double) intGrid[i] / 255;
 
-	// Vorhersage und Darstellung
 	if (KnnGUI.hasNeuralNetwork())
 	    displayData(KnnGUI.getNeuralNetwork().query(grid));
 
-	// Fehlerbehandlung
 	else
 	    JOptionPane.showMessageDialog(null,
-		    "Das Standard-Netz konnte nicht geladen werden, bitte wähle ein anders aus", null, 2);
+		    "The default nnet failed to load, please select another one", null, 2);
     }
 
-    // Stellt die übergebenen Daten auf den Progressbars dar
+    // displays the accuracy using progress bars
     public void displayData(double[] values) {
 	int[] barValues = new int[10];
 
@@ -143,7 +142,6 @@ public class RecognitionPanel extends JPanel {
 	}
     }
     
-    // Rundet eine Fließkommazahl
     private static double round(double value, int places) {
 	if (places < 0)
 	    throw new IllegalArgumentException();
